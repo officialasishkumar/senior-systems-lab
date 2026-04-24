@@ -39,6 +39,7 @@ func (f HandlerFunc) Handle(ctx context.Context, msg Message) error {
 type Broker struct {
 	queue   chan Message
 	dlq     chan Message
+	dlqMu   sync.Mutex
 	metrics *observability.Metrics
 	closed  atomic.Bool
 	ids     atomic.Uint64
@@ -111,12 +112,13 @@ func (b *Broker) handle(ctx context.Context, handler Handler, msg Message) {
 		b.metrics.IncQueueFailed()
 		time.Sleep(time.Duration(attempt) * 25 * time.Millisecond)
 	}
+	b.dlqMu.Lock()
+	defer b.dlqMu.Unlock()
 	select {
 	case b.dlq <- msg:
-		b.metrics.IncQueueDeadLettered()
 	default:
-		b.metrics.IncQueueDeadLettered()
 	}
+	b.metrics.IncQueueDeadLettered()
 }
 
 func (b *Broker) Stats() map[string]int {
@@ -129,6 +131,8 @@ func (b *Broker) Stats() map[string]int {
 }
 
 func (b *Broker) DeadLetters() []Message {
+	b.dlqMu.Lock()
+	defer b.dlqMu.Unlock()
 	size := len(b.dlq)
 	out := make([]Message, 0, size)
 	for i := 0; i < size; i++ {

@@ -1,0 +1,10 @@
+.git
+.github
+.terraform
+**/.terraform
+bin
+dist
+coverage.out
+*.log
+tmp
+

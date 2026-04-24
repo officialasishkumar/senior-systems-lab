@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Senior Systems Lab API
+  version: 1.0.0
+paths:
+  /healthz:
+    get:
+      summary: Liveness check
+      responses:
+        "200":
+          description: Process is alive
+  /readyz:
+    get:
+      summary: Readiness check
+      responses:
+        "200":
+          description: Process is ready for traffic
+  /metrics:
+    get:
+      summary: Prometheus metrics
+      responses:
+        "200":
+          description: Prometheus text exposition
+  /queue/stats:
+    get:
+      summary: Queue depth and capacity
+      responses:
+        "200":
+          description: Queue state
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+  /queue/dead-letters:
+    get:
+      summary: Snapshot of dead-lettered messages
+      responses:
+        "200":
+          description: Dead-letter queue contents
+  /queue/publish:
+    post:
+      summary: Publish a message to the bounded broker
+      parameters:
+        - name: X-Trace-ID
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [topic, payload]
+              properties:
+                topic:
+                  type: string
+                  example: orders.created
+                payload:
+                  type: string
+                  example: order-123
+                headers:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        "202":
+          description: Message accepted
+        "400":
+          description: Invalid request
+        "503":
+          description: Queue full
+

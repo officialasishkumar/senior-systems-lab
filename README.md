@@ -73,6 +73,7 @@ terraform -chdir=infra/terraform validate
 - Network engineering: VPC/subnet layout, route tables, security groups, TCP/UDP ingress rules, NAT/LB/DNS notes, and TLS/mTLS design.
 - Security: least-privilege service account, non-root container, read-only filesystem, input validation, secrets policy, threat model, and scanning.
 - Testing: unit tests, race tests, fuzz target, E2E protocol tests, CI validation, and deployment manifest rendering.
+- API contracts and validation artifacts: OpenAPI, protocol examples, load-test plan, and chaos-test matrix.
 
 ## API Examples
 
@@ -95,4 +96,3 @@ UDP commands:
 PING
 HEARTBEAT node-1
 ```
-
