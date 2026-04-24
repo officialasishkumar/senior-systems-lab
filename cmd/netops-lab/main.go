@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -18,6 +19,13 @@ import (
 )
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == "--healthcheck" {
+		if err := healthcheck(config.FromEnv().HTTPAddr); err != nil {
+			os.Exit(1)
+		}
+		return
+	}
+
 	cfg := config.FromEnv()
 	logger := logging.New(cfg.LogLevel)
 	metrics := observability.NewMetrics()
@@ -75,4 +83,21 @@ func main() {
 	case <-time.After(cfg.ShutdownTimeout):
 		logger.Warn("shutdown timeout elapsed")
 	}
+}
+
+func healthcheck(addr string) error {
+	host := addr
+	if strings.HasPrefix(host, ":") {
+		host = "127.0.0.1" + host
+	}
+	client := http.Client{Timeout: 2 * time.Second}
+	resp, err := client.Get("http://" + host + "/healthz")
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("unhealthy")
+	}
+	return nil
 }

@@ -1,0 +1,10 @@
+bin/
+dist/
+coverage.out
+.env
+.terraform/
+*.tfstate
+*.tfstate.*
+*.log
+tmp/
+
