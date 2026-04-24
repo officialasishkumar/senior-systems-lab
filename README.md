@@ -61,19 +61,18 @@ terraform -chdir=infra/terraform init
 terraform -chdir=infra/terraform validate
 ```
 
-## Senior Engineering Topics Covered
+## Capabilities
 
-- Backend service design: package boundaries, dependency injection, validation, timeouts, graceful shutdown, and context propagation.
-- Messaging: bounded queues, backpressure, retries, dead-letter queues, worker concurrency, queue depth, and failure isolation.
-- TCP: explicit framing, binary length prefix, payload validation, connection lifecycle, deadlines, and fuzz testing.
-- UDP: stateless heartbeat handling, malformed packet accounting, packet-level tests, and low-latency telemetry.
-- Observability: structured logs, trace IDs, RED-style counters, protocol latency metrics, and Prometheus scrape configuration.
-- SRE: health/readiness endpoints, SLOs, error budget policy, runbooks, rollback checklist, and incident templates.
-- DevOps: Docker, Compose, Kubernetes, Helm, Terraform, GitHub Actions, SBOM, vulnerability scanning, and release automation.
-- Network engineering: VPC/subnet layout, route tables, security groups, TCP/UDP ingress rules, NAT/LB/DNS notes, and TLS/mTLS design.
-- Security: least-privilege service account, non-root container, read-only filesystem, input validation, secrets policy, threat model, and scanning.
-- Testing: unit tests, race tests, fuzz target, E2E protocol tests, CI validation, and deployment manifest rendering.
-- API contracts and validation artifacts: OpenAPI, protocol examples, load-test plan, and chaos-test matrix.
+- HTTP event publishing with validation, request timeouts, trace propagation, and consistent JSON responses.
+- Bounded message ingestion with worker pools, backpressure, retries, dead-letter storage, queue depth, and failure isolation.
+- TCP event ingestion with explicit framing, binary length prefixes, payload validation, connection lifecycle handling, and fuzz coverage.
+- UDP heartbeat handling for stateless liveness telemetry, malformed packet accounting, and packet-level tests.
+- Prometheus metrics, structured logs, trace IDs, protocol latency signals, and scrape-ready deployment configuration.
+- Health and readiness endpoints, SLOs, error budget policy, runbooks, rollback checklist, and incident templates.
+- Docker, Compose, Kubernetes, Helm, Terraform, GitHub Actions, SBOM generation, vulnerability scanning, and release automation.
+- VPC/subnet layout, route tables, security groups, TCP/UDP ingress rules, NAT/load balancer/DNS notes, and TLS/mTLS design.
+- Least-privilege service account, non-root container, read-only filesystem, input validation, secrets policy, threat model, and scanner-backed checks.
+- Unit tests, race tests, fuzz target, E2E protocol tests, CI validation, deployment manifest rendering, OpenAPI, load-test plan, and chaos-test matrix.
 
 ## API Examples
 
