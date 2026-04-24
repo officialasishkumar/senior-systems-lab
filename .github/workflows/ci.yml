@@ -42,7 +42,7 @@ jobs:
           format: spdx-json
           output-file: sbom.spdx.json
       - name: Scan image
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: netops-lab:${{ github.sha }}
           format: table
@@ -61,4 +61,3 @@ jobs:
       - name: Terraform validate
         uses: hashicorp/setup-terraform@v3
       - run: terraform -chdir=infra/terraform fmt -check && terraform -chdir=infra/terraform init -backend=false && terraform -chdir=infra/terraform validate
-
