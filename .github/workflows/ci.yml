@@ -18,6 +18,7 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
+          cache-dependency-path: go.mod
       - name: Format
         run: test -z "$(gofmt -l cmd internal)"
       - name: Vet
