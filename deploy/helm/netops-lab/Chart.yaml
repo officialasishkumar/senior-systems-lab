@@ -1,0 +1,7 @@
+apiVersion: v2
+name: netops-lab
+description: Go backend, SRE, DevOps, and network engineering reference service
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+

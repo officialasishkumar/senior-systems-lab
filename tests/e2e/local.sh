@@ -9,7 +9,7 @@ pid=$!
 trap 'kill "$pid" >/dev/null 2>&1 || true' EXIT
 
 for _ in $(seq 1 30); do
-  if curl -fsS http://127.0.0.1:18080/readyz >/dev/null; then
+  if curl -fsS http://127.0.0.1:18080/readyz >/dev/null 2>&1; then
     break
   fi
   sleep 0.2
@@ -21,4 +21,3 @@ go run ./cmd/netprobe -mode tcp -addr 127.0.0.1:19090 -topic e2e.tcp -payload ok
 go run ./cmd/netprobe -mode udp -addr 127.0.0.1:19091 | grep -q PONG
 curl -fsS http://127.0.0.1:18080/metrics | grep -q netops_http_requests_total
 curl -fsS http://127.0.0.1:18080/queue/stats | grep -q queued
-

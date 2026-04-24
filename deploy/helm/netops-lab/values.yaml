@@ -1,0 +1,24 @@
+replicaCount: 3
+
+image:
+  repository: ghcr.io/officialasishkumar/senior-systems-lab
+  tag: latest
+  pullPolicy: IfNotPresent
+
+config:
+  logLevel: info
+  queueCapacity: "4096"
+  deadLetterCapacity: "512"
+  workers: "8"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+service:
+  type: ClusterIP
+

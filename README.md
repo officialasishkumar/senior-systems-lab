@@ -1,0 +1,98 @@
+# Senior Systems Lab
+
+Senior Systems Lab is a Go service that demonstrates backend, SRE, DevOps, and network engineering concerns in one runnable project. It exposes:
+
+- HTTP APIs for health, readiness, queue publishing, dead-letter inspection, and Prometheus metrics.
+- A bounded in-memory message broker with worker pools, retries, trace propagation, and dead-letter handling.
+- A length-prefixed TCP protocol for framed message ingestion.
+- A UDP heartbeat protocol for low-overhead liveness telemetry.
+- Structured JSON logs, correlation IDs, graceful shutdown, and operational runbooks.
+- Docker, Compose, Kubernetes, Helm, Terraform, CI, release automation, SBOM generation, and image scanning.
+
+## Architecture
+
+```text
+clients
+  |-- HTTP :8080 /queue/publish /metrics /healthz /readyz
+  |-- TCP  :9090 length-prefixed JSON frames
+  |-- UDP  :9091 PING and HEARTBEAT datagrams
+        |
+        v
+ bounded broker -> workers -> retry policy -> dead-letter queue
+        |
+        v
+ structured logs + Prometheus metrics + trace IDs
+```
+
+The code is intentionally dependency-light so a fresh checkout builds quickly and the important systems behavior stays visible in the source. Production integrations such as Kafka, NATS, Redis Streams, OpenTelemetry collectors, and managed databases can replace the local interfaces without changing the service boundaries.
+
+## Run Locally
+
+```bash
+make test
+make e2e
+make build
+./bin/netops-lab
+```
+
+In another terminal:
+
+```bash
+make probe-http
+make probe-tcp
+make probe-udp
+curl -fsS http://127.0.0.1:8080/metrics
+```
+
+## Docker
+
+```bash
+make docker-build
+docker run --rm -p 8080:8080 -p 9090:9090 -p 9091:9091/udp netops-lab:local
+```
+
+## Deploy
+
+```bash
+kubectl apply -k deploy/kubernetes
+helm lint deploy/helm/netops-lab
+helm upgrade --install netops-lab deploy/helm/netops-lab
+terraform -chdir=infra/terraform init
+terraform -chdir=infra/terraform validate
+```
+
+## Senior Engineering Topics Covered
+
+- Backend service design: package boundaries, dependency injection, validation, timeouts, graceful shutdown, and context propagation.
+- Messaging: bounded queues, backpressure, retries, dead-letter queues, worker concurrency, queue depth, and failure isolation.
+- TCP: explicit framing, binary length prefix, payload validation, connection lifecycle, deadlines, and fuzz testing.
+- UDP: stateless heartbeat handling, malformed packet accounting, packet-level tests, and low-latency telemetry.
+- Observability: structured logs, trace IDs, RED-style counters, protocol latency metrics, and Prometheus scrape configuration.
+- SRE: health/readiness endpoints, SLOs, error budget policy, runbooks, rollback checklist, and incident templates.
+- DevOps: Docker, Compose, Kubernetes, Helm, Terraform, GitHub Actions, SBOM, vulnerability scanning, and release automation.
+- Network engineering: VPC/subnet layout, route tables, security groups, TCP/UDP ingress rules, NAT/LB/DNS notes, and TLS/mTLS design.
+- Security: least-privilege service account, non-root container, read-only filesystem, input validation, secrets policy, threat model, and scanning.
+- Testing: unit tests, race tests, fuzz target, E2E protocol tests, CI validation, and deployment manifest rendering.
+
+## API Examples
+
+```bash
+curl -fsS -X POST http://127.0.0.1:8080/queue/publish \
+  -H 'Content-Type: application/json' \
+  -H 'X-Trace-ID: demo-trace' \
+  -d '{"topic":"orders.created","payload":"order-123"}'
+```
+
+TCP frames are encoded as four big-endian bytes containing the JSON payload size followed by the JSON body:
+
+```json
+{"topic":"orders.created","payload":"order-123","trace_id":"demo-trace"}
+```
+
+UDP commands:
+
+```text
+PING
+HEARTBEAT node-1
+```
+
