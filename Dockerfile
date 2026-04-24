@@ -1,4 +1,4 @@
-FROM golang:1.26.0-bookworm AS build
+FROM golang:1.26.2-bookworm AS build
 WORKDIR /src
 COPY go.mod ./
 RUN go mod download
@@ -10,4 +10,3 @@ USER nonroot:nonroot
 COPY --from=build /out/netops-lab /netops-lab
 EXPOSE 8080 9090 9091/udp
 ENTRYPOINT ["/netops-lab"]
-
