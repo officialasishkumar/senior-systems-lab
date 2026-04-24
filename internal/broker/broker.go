@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/officialasishkumar/senior-systems-lab/internal/observability"
+	"github.com/officialasishkumar/pulsemesh/internal/observability"
 )
 
 var (

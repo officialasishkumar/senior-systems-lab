@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/officialasishkumar/senior-systems-lab/internal/observability"
+	"github.com/officialasishkumar/pulsemesh/internal/observability"
 )
 
 func TestPublishAndProcess(t *testing.T) {

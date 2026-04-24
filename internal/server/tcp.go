@@ -12,8 +12,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/officialasishkumar/senior-systems-lab/internal/broker"
-	"github.com/officialasishkumar/senior-systems-lab/internal/observability"
+	"github.com/officialasishkumar/pulsemesh/internal/broker"
+	"github.com/officialasishkumar/pulsemesh/internal/observability"
 )
 
 type TCP struct {

@@ -1,6 +1,6 @@
-# Senior Systems Lab
+# PulseMesh
 
-Senior Systems Lab is a Go service that demonstrates backend, SRE, DevOps, and network engineering concerns in one runnable project. It exposes:
+PulseMesh is a Go event ingress and node heartbeat platform for operating distributed systems. It accepts application events over HTTP and TCP, accepts lightweight node heartbeats over UDP, routes accepted work through a bounded broker, and exposes the operational signals needed to run it safely.
 
 - HTTP APIs for health, readiness, queue publishing, dead-letter inspection, and Prometheus metrics.
 - A bounded in-memory message broker with worker pools, retries, trace propagation, and dead-letter handling.
@@ -24,7 +24,7 @@ clients
  structured logs + Prometheus metrics + trace IDs
 ```
 
-The code is intentionally dependency-light so a fresh checkout builds quickly and the important systems behavior stays visible in the source. Production integrations such as Kafka, NATS, Redis Streams, OpenTelemetry collectors, and managed databases can replace the local interfaces without changing the service boundaries.
+The code is intentionally dependency-light so a fresh checkout builds quickly and the core systems behavior stays visible in the source. Production integrations such as Kafka, NATS, Redis Streams, OpenTelemetry collectors, and managed databases can replace the local interfaces without changing the service boundaries.
 
 ## Run Locally
 
@@ -32,7 +32,7 @@ The code is intentionally dependency-light so a fresh checkout builds quickly an
 make test
 make e2e
 make build
-./bin/netops-lab
+./bin/pulsemesh
 ```
 
 In another terminal:
@@ -48,15 +48,15 @@ curl -fsS http://127.0.0.1:8080/metrics
 
 ```bash
 make docker-build
-docker run --rm -p 8080:8080 -p 9090:9090 -p 9091:9091/udp netops-lab:local
+docker run --rm -p 8080:8080 -p 9090:9090 -p 9091:9091/udp pulsemesh:local
 ```
 
 ## Deploy
 
 ```bash
 kubectl apply -k deploy/kubernetes
-helm lint deploy/helm/netops-lab
-helm upgrade --install netops-lab deploy/helm/netops-lab
+helm lint deploy/helm/pulsemesh
+helm upgrade --install pulsemesh deploy/helm/pulsemesh
 terraform -chdir=infra/terraform init
 terraform -chdir=infra/terraform validate
 ```

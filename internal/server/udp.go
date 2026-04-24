@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/officialasishkumar/senior-systems-lab/internal/observability"
+	"github.com/officialasishkumar/pulsemesh/internal/observability"
 )
 
 type UDP struct {

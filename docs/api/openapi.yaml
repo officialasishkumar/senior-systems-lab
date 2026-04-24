@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Senior Systems Lab API
+  title: PulseMesh API
   version: 1.0.0
 paths:
   /healthz:
@@ -73,4 +73,3 @@ paths:
           description: Invalid request
         "503":
           description: Queue full
-

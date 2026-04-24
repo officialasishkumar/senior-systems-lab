@@ -1,6 +1,6 @@
 variable "name" {
   type    = string
-  default = "netops-lab"
+  default = "pulsemesh"
 }
 
 variable "region" {

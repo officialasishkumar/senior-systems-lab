@@ -1,4 +1,4 @@
-module github.com/officialasishkumar/senior-systems-lab
+module github.com/officialasishkumar/pulsemesh
 
 go 1.23
 

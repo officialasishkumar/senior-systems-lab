@@ -1,7 +1,7 @@
 replicaCount: 3
 
 image:
-  repository: ghcr.io/officialasishkumar/senior-systems-lab
+  repository: ghcr.io/officialasishkumar/pulsemesh
   tag: latest
   pullPolicy: IfNotPresent
 

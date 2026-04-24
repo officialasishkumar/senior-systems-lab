@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pulsemesh
+description: Event ingress and node heartbeat platform for distributed systems
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

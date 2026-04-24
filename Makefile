@@ -1,7 +1,7 @@
 .PHONY: fmt vet test race build run probe-http probe-tcp probe-udp docker-build compose-up compose-down e2e
 
-APP := netops-lab
-IMAGE ?= netops-lab:local
+APP := pulsemesh
+IMAGE ?= pulsemesh:local
 
 fmt:
 	gofmt -w cmd internal
@@ -16,11 +16,11 @@ race:
 	go test -race ./...
 
 build:
-	go build -trimpath -ldflags="-s -w" -o bin/$(APP) ./cmd/netops-lab
+	go build -trimpath -ldflags="-s -w" -o bin/$(APP) ./cmd/pulsemesh
 	go build -trimpath -ldflags="-s -w" -o bin/netprobe ./cmd/netprobe
 
 run:
-	go run ./cmd/netops-lab
+	go run ./cmd/pulsemesh
 
 probe-http:
 	go run ./cmd/netprobe -mode http -addr 127.0.0.1:8080

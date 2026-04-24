@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
-HTTP_ADDR="127.0.0.1:18080" TCP_ADDR="127.0.0.1:19090" UDP_ADDR="127.0.0.1:19091" go run ./cmd/netops-lab > /tmp/netops-lab-e2e.log 2>&1 &
+HTTP_ADDR="127.0.0.1:18080" TCP_ADDR="127.0.0.1:19090" UDP_ADDR="127.0.0.1:19091" go run ./cmd/pulsemesh > /tmp/pulsemesh-e2e.log 2>&1 &
 pid=$!
 trap 'kill "$pid" >/dev/null 2>&1 || true' EXIT
 

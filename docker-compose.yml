@@ -1,7 +1,7 @@
 services:
-  netops-lab:
+  pulsemesh:
     build: .
-    image: netops-lab:local
+    image: pulsemesh:local
     environment:
       HTTP_ADDR: ":8080"
       TCP_ADDR: ":9090"
@@ -13,7 +13,7 @@ services:
       - "9090:9090"
       - "9091:9091/udp"
     healthcheck:
-      test: ["CMD", "/netops-lab", "--healthcheck"]
+      test: ["CMD", "/pulsemesh", "--healthcheck"]
       interval: 30s
       timeout: 3s
       retries: 3

@@ -34,17 +34,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build image
-        run: docker build -t netops-lab:${{ github.sha }} .
+        run: docker build -t pulsemesh:${{ github.sha }} .
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
-          image: netops-lab:${{ github.sha }}
+          image: pulsemesh:${{ github.sha }}
           format: spdx-json
           output-file: sbom.spdx.json
       - name: Scan image
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: netops-lab:${{ github.sha }}
+          image-ref: pulsemesh:${{ github.sha }}
           format: table
           severity: CRITICAL,HIGH
           exit-code: "1"
@@ -57,7 +57,7 @@ jobs:
         run: kubectl kustomize deploy/kubernetes >/tmp/rendered.yaml
       - name: Helm lint
         uses: azure/setup-helm@v4
-      - run: helm lint deploy/helm/netops-lab && helm template netops-lab deploy/helm/netops-lab >/tmp/chart.yaml
+      - run: helm lint deploy/helm/pulsemesh && helm template pulsemesh deploy/helm/pulsemesh >/tmp/chart.yaml
       - name: Terraform validate
         uses: hashicorp/setup-terraform@v3
       - run: terraform -chdir=infra/terraform fmt -check && terraform -chdir=infra/terraform init -backend=false && terraform -chdir=infra/terraform validate

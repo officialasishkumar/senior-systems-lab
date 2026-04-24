@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: netops-lab
-  namespace: netops-lab
+  name: pulsemesh
+  namespace: pulsemesh
   labels:
-    app.kubernetes.io/name: netops-lab
+    app.kubernetes.io/name: pulsemesh
 spec:
   replicas: 3
   strategy:
@@ -14,29 +14,29 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app.kubernetes.io/name: netops-lab
+      app.kubernetes.io/name: pulsemesh
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: netops-lab
+        app.kubernetes.io/name: pulsemesh
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
         prometheus.io/path: /metrics
     spec:
-      serviceAccountName: netops-lab
+      serviceAccountName: pulsemesh
       terminationGracePeriodSeconds: 20
       securityContext:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: netops-lab
-          image: ghcr.io/officialasishkumar/senior-systems-lab:latest
+        - name: pulsemesh
+          image: ghcr.io/officialasishkumar/pulsemesh:latest
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
-                name: netops-lab-config
+                name: pulsemesh-config
           ports:
             - name: http
               containerPort: 8080

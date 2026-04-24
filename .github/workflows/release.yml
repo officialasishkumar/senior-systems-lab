@@ -19,8 +19,8 @@ jobs:
       - name: Build release artifacts
         run: |
           mkdir -p dist
-          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/netops-lab-linux-amd64 ./cmd/netops-lab
-          GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/netops-lab-darwin-arm64 ./cmd/netops-lab
+          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/pulsemesh-linux-amd64 ./cmd/pulsemesh
+          GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/pulsemesh-darwin-arm64 ./cmd/pulsemesh
           sha256sum dist/* > dist/checksums.txt
       - name: Build and publish image
         run: |
@@ -31,4 +31,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-

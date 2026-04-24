@@ -2,7 +2,7 @@
 
 ## Goals
 
-The service is a compact reference implementation for backend and infrastructure interviews that expect senior-level reasoning across protocols, reliability, observability, and deployment. It is built around real runnable behavior instead of disconnected examples.
+PulseMesh is an event ingress and node heartbeat platform for distributed systems. Its core job is to accept events over HTTP and TCP, accept low-cost liveness heartbeats over UDP, apply backpressure when the system is saturated, and expose clear signals for operators.
 
 ## Request Flow
 
@@ -31,7 +31,7 @@ TCP is stream-oriented, so the service uses a length-prefixed frame:
 - 1 MiB frame size limit to prevent unbounded allocation.
 - Per-connection goroutine for isolation.
 
-This demonstrates framing, partial-read handling, malformed frames, backpressure, and connection lifecycle management.
+This keeps framing, partial-read handling, malformed frames, backpressure, and connection lifecycle management explicit.
 
 ## UDP Design
 
@@ -78,4 +78,3 @@ queue_seconds    = queue_capacity / publish_rate
 ```
 
 For example, 1,000 messages per second at 20 ms processing time and 70 percent worker utilization requires about 29 workers.
-

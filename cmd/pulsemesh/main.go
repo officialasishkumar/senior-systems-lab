@@ -11,11 +11,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/officialasishkumar/senior-systems-lab/internal/broker"
-	"github.com/officialasishkumar/senior-systems-lab/internal/config"
-	"github.com/officialasishkumar/senior-systems-lab/internal/logging"
-	"github.com/officialasishkumar/senior-systems-lab/internal/observability"
-	"github.com/officialasishkumar/senior-systems-lab/internal/server"
+	"github.com/officialasishkumar/pulsemesh/internal/broker"
+	"github.com/officialasishkumar/pulsemesh/internal/config"
+	"github.com/officialasishkumar/pulsemesh/internal/logging"
+	"github.com/officialasishkumar/pulsemesh/internal/observability"
+	"github.com/officialasishkumar/pulsemesh/internal/server"
 )
 
 func main() {

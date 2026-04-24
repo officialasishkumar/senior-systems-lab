@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"testing"
 
-	"github.com/officialasishkumar/senior-systems-lab/internal/observability"
+	"github.com/officialasishkumar/pulsemesh/internal/observability"
 )
 
 func TestUDPCommands(t *testing.T) {
